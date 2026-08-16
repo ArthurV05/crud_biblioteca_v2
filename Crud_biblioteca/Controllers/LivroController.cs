@@ -1,10 +1,5 @@
-﻿using Crud_biblioteca.BD;
-using Crud_biblioteca.Model;
-using Crud_biblioteca.Service;
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
+﻿using Crud_biblioteca.Service;
+
 
 namespace Crud_biblioteca.Controllers
 {

@@ -1,6 +1,4 @@
 ﻿using Crud_biblioteca.Controllers;
-using Npgsql.Replication;
-using System.Runtime.CompilerServices;
 
 internal class Program
 {
