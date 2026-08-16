@@ -1,10 +1,7 @@
 using Crud_biblioteca.Model;
 using Crud_biblioteca.DATA;
 using Dapper;
-using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.Marshalling;
-using System.Text;
+
 
 namespace Crud_biblioteca.BD
 {
@@ -27,9 +24,9 @@ namespace Crud_biblioteca.BD
         {
             using var conn = new ConexaoBD();
 
-            string query = $"SELECT * FROM livros WHERE id = {id}";
+            string query = "SELECT * FROM livros WHERE id = @id";
 
-            Livro livro = conn.Conexao.Query<Livro>(query).FirstOrDefault();
+            Livro livro = conn.Conexao.Query<Livro>(query, new { id }).FirstOrDefault();
 
             return livro;
 
@@ -39,7 +36,9 @@ namespace Crud_biblioteca.BD
         {
             using var conn = new ConexaoBD();
 
-            string query = "SELECT * FROM livros";
+            string query = @" 
+                           SELECT * 
+                           FROM livros";
 
             var livros = conn.Conexao.Query<Livro>(query);
 
@@ -48,7 +47,7 @@ namespace Crud_biblioteca.BD
 
         public bool Atualizar(Livro livro)
         {
-            var conn = new ConexaoBD();
+            using var conn = new ConexaoBD();
 
             string query = @"
                             UPDATE livros
@@ -80,8 +79,11 @@ namespace Crud_biblioteca.BD
         public bool Deletar(int id)
         {
             using var conn = new ConexaoBD();
-            //Está apagando tudo do banco
-            string query = @"DELETE FROM livros WHERE id = @id";
+
+            string query = @"
+DELETE FROM livros 
+                            WHERE 
+                                id = @id";
 
             var result = conn.Conexao.Execute(query, new { id });
 
