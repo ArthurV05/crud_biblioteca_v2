@@ -5,7 +5,7 @@ using Dapper;
 
 namespace Crud_biblioteca.Repository
 {
-    internal class LivroRepositorio
+    internal class LivroRepository
     {
 
        public bool Inserir(Livro livro)
@@ -73,6 +73,21 @@ namespace Crud_biblioteca.Repository
                             Where id = @id";
 
             var result = conn.Conexao.Execute(query, new {id, quantidade});
+
+            return result == 1;
+        }
+
+        public bool AtualizarValor(int id, double valor)
+        {
+            using var conn = new ConexaoBD();
+
+            string query = @"
+                           UPDATE livros
+                            SET
+                                valor = @valor
+                            Where id = @id";
+
+            var result = conn.Conexao.Execute(query, new { id, valor });
 
             return result == 1;
         }

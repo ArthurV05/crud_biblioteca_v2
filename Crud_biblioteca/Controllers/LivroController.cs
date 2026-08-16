@@ -5,8 +5,7 @@ namespace Crud_biblioteca.Controllers
 {
     internal class LivroController
     {
-        //private readonly LivroService _livroService = new LivroService();
-
+        //private readonly LivroService _livroService = new LivroService(); Tirar dúvida no futuro
         private readonly LivroService _livroService;
 
         public LivroController()

@@ -1,18 +1,14 @@
-﻿using Crud_biblioteca.BD;
-using Crud_biblioteca.Model;
-using System.Globalization;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Crud_biblioteca.Model;
+using Crud_biblioteca.Repository;
 
 namespace Crud_biblioteca.Service
 {
     internal class LivroService
     {
-        private readonly LivroRepositorio _livroRepositorio;
+        private readonly LivroRepository _livroRepositorio;
         public LivroService()
         {
-            _livroRepositorio = new LivroRepositorio();
+            _livroRepositorio = new LivroRepository();
  
         }
 
@@ -74,7 +70,6 @@ namespace Crud_biblioteca.Service
             Console.WriteLine("Informe o ID do livro que deseja buscar: ");
             try
             {
-                bool continuar = true;
 
                 int id = int.Parse(Console.ReadLine());
 
@@ -96,7 +91,7 @@ namespace Crud_biblioteca.Service
         public void AtualizarLivro()
         {
             bool continuar = true;
-
+            Console.Clear();
             Console.WriteLine("Informe o id do livro que será atualizado");
             int id = int.Parse(Console.ReadLine());
 
@@ -105,7 +100,7 @@ namespace Crud_biblioteca.Service
                 Console.WriteLine("Livro não encontrado. Informe um id válido.");
                 return;
             }
-
+            
             while (continuar)
             {
                 Console.WriteLine("=====================");
@@ -153,7 +148,6 @@ namespace Crud_biblioteca.Service
                         Console.Clear();
 
                         Console.WriteLine("Estoque atualizado com sucesso!");
-
                         var livroAtualizado = _livroRepositorio.BuscarPorId(id);
 
                         Console.WriteLine(livroAtualizado.ToString());
@@ -168,7 +162,14 @@ namespace Crud_biblioteca.Service
                             Console.WriteLine("O valor não pode ser negativo. Informe um valor válido.");
                             break;
                         }
-                        //Terminar função de atualizar valor
+                        
+                        _livroRepositorio.AtualizarValor(id, novoValor);
+                        Console.Clear();
+
+                        Console.WriteLine("Valor atualizado com sucesso!");
+                        Console.WriteLine(_livroRepositorio.BuscarPorId(id).ToString());
+
+                        continuar = false;
 
                         break;
                     case 4:
