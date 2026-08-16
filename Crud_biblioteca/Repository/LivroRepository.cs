@@ -3,7 +3,7 @@ using Crud_biblioteca.DATA;
 using Dapper;
 
 
-namespace Crud_biblioteca.BD
+namespace Crud_biblioteca.Repository
 {
     internal class LivroRepositorio
     {
@@ -81,7 +81,7 @@ namespace Crud_biblioteca.BD
             using var conn = new ConexaoBD();
 
             string query = @"
-DELETE FROM livros 
+                            DELETE FROM livros 
                             WHERE 
                                 id = @id";
 
