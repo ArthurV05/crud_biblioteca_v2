@@ -111,17 +111,31 @@ namespace Crud_biblioteca.Service
 
         }
 
-        public int AtualizarEstoque(int id,int estoque)
+        public bool AtualizarEstoque(int id,int estoque)
         {
-            if(estoque > 0)
+            if(estoque < 0)
             {
                 Console.WriteLine("Erro: O estoque não pode ser um valor menor que zero");
+                return false;
             }
 
             _livroRepository.AtualizarEstoque(id, estoque);
 
-            return estoque;
+            return true;
 
+        }
+
+        public bool AtualizarValor(int id, double valor)
+        {
+            if(valor < 0)
+            {
+                Console.WriteLine("Erro: O estoque não pode ser um valor menor que zero");
+                return false;
+            }
+
+            _livroRepository.AtualizarValor(id, valor);
+
+            return true;
         }
     }
 }
