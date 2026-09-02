@@ -1,8 +1,9 @@
 ﻿using Crud_biblioteca.Controllers;
+using Crud_biblioteca.UI;
 
 internal class Program
 {
-    private LivroController _livroController;
+    private readonly LivroController _livroController;
 
 
     private Program()
@@ -13,7 +14,7 @@ internal class Program
     private static void Main(string[] args)
     {
         var program = new Program();
-        program._livroController.Menu();
+        program._livroController.Iniciar();
 
     }
 }
