@@ -5,7 +5,7 @@ using Dapper;
 
 namespace Crud_biblioteca.Repository
 {
-    internal class LivroRepository : ILivroRepositoryInterface
+    internal class LivroRepository : ILivroRepository
     {
 
        public bool Inserir(Livro livro)
@@ -75,7 +75,7 @@ namespace Crud_biblioteca.Repository
             return result == 1;
         }
 
-        public bool AtualizarValor(int id, double valor)
+        public bool AtualizarValor(int id, decimal valor)
         {
             using var conn = new ConexaoBD();
 

@@ -3,63 +3,41 @@ using Crud_biblioteca.Repository;
 
 namespace Crud_biblioteca.Service
 {
-    internal class LivroService : ILivroServiceInterface
+    internal class LivroService : ILivroService
     {
         private readonly LivroRepository _livroRepository;
         public LivroService()
         {
             _livroRepository = new LivroRepository();
- 
+
         }
 
-        public Livro Inserir(Livro livro) 
+        public bool Inserir(Livro livro)
         {
-            try
+
+            if (string.IsNullOrWhiteSpace(livro.Nome) || livro.Quantidade < 0)
             {
-                var id = _livroRepository.BuscarPorId(livro.Id);
-                if (id == null)
-                {
-                    Console.WriteLine("Erro: Id inválido");
-                    return null;
-                }
-
-                if (livro.Nome.IsWhiteSpace())
-                {
-                    Console.WriteLine("Nome do livro vazio. Digite um nome válido");
-                    return null;
-                }
-
-                if (livro.Quantidade < 0 || livro.Quantidade == null)
-                {
-                    Console.WriteLine("Erro: Um livro não poder ter uma quantidade negativa");
-                    return null;
-                }
-
-                if (livro.Valor < 0)
-                {
-                    Console.WriteLine("Erro: O valor do livro não poder ser negativo");
-                    return null;
-                }
-
-                _livroRepository.Inserir(livro);
-
-                return livro;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                return null;
+                return false;
             }
 
+            if (livro.Valor < 0)
+            {
+
+                return false;
+            }
+
+            _livroRepository.Inserir(livro);
+
+            return true;
         }
 
         public List<Livro> ListarLivros()
         {
             var livros = _livroRepository.ListarLivros();
 
-            if(livros == null) 
-            { 
-                return null; 
+            if (livros == null)
+            {
+                return null;
             }
 
             return livros;
@@ -67,69 +45,60 @@ namespace Crud_biblioteca.Service
 
         public Livro BuscarPorId(int id)
         {
-            try
+            var livro = _livroRepository.BuscarPorId(id);
+            if (livro == null)
             {
-                var livro = _livroRepository.BuscarPorId(id);
-                if (livro == null)
-
-                {
-                    Console.WriteLine("Livro não encontrado. Informe um Id válido.");
-                    return null;
-                }
-                return livro;
-            }
-            catch (Exception ex) 
-            {
-                Console.WriteLine($"Erro: {ex.Message}");
+                Console.WriteLine("Livro não encontrado. Informe um Id válido.");
                 return null;
             }
+            return livro;
 
         }
 
-        public Livro AtualizarLivro(Livro livro)
+        public bool AtualizarLivro(Livro livro)//Refatorar em controller
         {
-            try
+
+            if (string.IsNullOrWhiteSpace(livro.Nome))
             {
-                if(livro.Quantidade < 0)
-                {
-                    Console.WriteLine("Erro: A quantidade de livros não pode ser menor que zero");
-                }
-
-                if(livro.Valor < 0)
-                {
-                    Console.WriteLine("Erro: O valor do livro não pode ser menor que zero");
-                }
-
-                _livroRepository.Atualizar(livro);
-
-                return livro;
-            } catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                return null;
+                return false;
             }
+
+            if (livro.Quantidade < 0)
+            {
+                return false;
+            }
+
+            if (livro.Valor < 0)
+            {
+                return false;
+            }
+
+            _livroRepository.Atualizar(livro);
+
+            return true;
+
 
         }
 
-        public bool AtualizarEstoque(int id,int estoque)
+        public bool AtualizarEstoque(int id, int estoque)
         {
-            if(estoque < 0)
+
+            if (estoque < 0)
             {
-                Console.WriteLine("Erro: O estoque não pode ser um valor menor que zero");
                 return false;
             }
 
             _livroRepository.AtualizarEstoque(id, estoque);
-
             return true;
 
         }
 
-        public bool AtualizarValor(int id, double valor)
+        public bool AtualizarValor(int id, decimal valor) //Refatorar Controller
         {
-            if(valor < 0)
+
+            if (valor < 0)
             {
-                Console.WriteLine("Erro: O estoque não pode ser um valor menor que zero");
+
                 return false;
             }
 
@@ -137,5 +106,15 @@ namespace Crud_biblioteca.Service
 
             return true;
         }
+
+        public bool DeletarLivro(int id)
+        {
+
+            var result = _livroRepository.Deletar(id);
+
+            return result;
+
+        }
+
     }
 }
