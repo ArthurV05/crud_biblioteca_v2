@@ -1,4 +1,5 @@
-﻿using Crud_biblioteca.Model;
+﻿using System.Globalization;
+using Crud_biblioteca.Model;
 using Crud_biblioteca.Repository;
 
 namespace Crud_biblioteca.Service
@@ -26,9 +27,9 @@ namespace Crud_biblioteca.Service
                 return false;
             }
 
-            _livroRepository.Inserir(livro);
+            var result = _livroRepository.Inserir(livro);
 
-            return true;
+            return result;
         }
 
         public List<Livro> ListarLivros()
@@ -46,9 +47,10 @@ namespace Crud_biblioteca.Service
         public Livro BuscarPorId(int id)
         {
             var livro = _livroRepository.BuscarPorId(id);
+
             if (livro == null)
             {
-                Console.WriteLine("Livro não encontrado. Informe um Id válido.");
+
                 return null;
             }
             return livro;
@@ -73,9 +75,9 @@ namespace Crud_biblioteca.Service
                 return false;
             }
 
-            _livroRepository.Atualizar(livro);
+            var result = _livroRepository.Atualizar(livro);
 
-            return true;
+            return result;
 
 
         }
@@ -88,8 +90,8 @@ namespace Crud_biblioteca.Service
                 return false;
             }
 
-            _livroRepository.AtualizarEstoque(id, estoque);
-            return true;
+            var result = _livroRepository.AtualizarEstoque(id, estoque);
+            return result;
 
         }
 
@@ -101,10 +103,8 @@ namespace Crud_biblioteca.Service
 
                 return false;
             }
-
-            _livroRepository.AtualizarValor(id, valor);
-
-            return true;
+            var result = _livroRepository.AtualizarValor(id, valor);
+            return result;
         }
 
         public bool DeletarLivro(int id)
