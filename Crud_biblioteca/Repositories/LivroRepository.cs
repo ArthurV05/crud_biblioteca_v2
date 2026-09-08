@@ -8,7 +8,7 @@ namespace Crud_biblioteca.Repository
     internal class LivroRepository : ILivroRepository
     {
 
-       public bool Inserir(Livro livro)
+        public bool Inserir(Livro livro)
         {
             using var conn = new ConexaoBD();
 
@@ -20,13 +20,13 @@ namespace Crud_biblioteca.Repository
             return result == 1;
         }
 
-        public Livro BuscarPorId(int id)
+        public Livro? BuscarPorId(int id)
         {
             using var conn = new ConexaoBD();
 
             string query = "SELECT * FROM livros WHERE id = @id";
 
-            Livro livro = conn.Conexao.Query<Livro>(query, new { id }).FirstOrDefault();
+            Livro? livro = conn.Conexao.Query<Livro>(query, new { id }).FirstOrDefault();
 
             return livro;
 
@@ -56,7 +56,7 @@ namespace Crud_biblioteca.Repository
                             WHERE id = @Id";
 
             var result = conn.Conexao.Execute(query, livro);
-            
+
             return result == 1;
         }
 
@@ -70,7 +70,7 @@ namespace Crud_biblioteca.Repository
                                 quantidade = @quantidade
                             Where id = @id";
 
-            var result = conn.Conexao.Execute(query, new {id, quantidade});
+            var result = conn.Conexao.Execute(query, new { id, quantidade });
 
             return result == 1;
         }

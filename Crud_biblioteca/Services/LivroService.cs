@@ -1,8 +1,7 @@
-﻿using System.Globalization;
-using Crud_biblioteca.Model;
+﻿using Crud_biblioteca.Model;
 using Crud_biblioteca.Repository;
 
-namespace Crud_biblioteca.Service
+namespace Crud_biblioteca.Services
 {
     internal class LivroService : ILivroService
     {
@@ -36,15 +35,10 @@ namespace Crud_biblioteca.Service
         {
             var livros = _livroRepository.ListarLivros();
 
-            if (livros == null)
-            {
-                return null;
-            }
-
             return livros;
         }
 
-        public Livro BuscarPorId(int id)
+        public Livro? BuscarPorId(int id)
         {
             var livro = _livroRepository.BuscarPorId(id);
 
@@ -57,7 +51,7 @@ namespace Crud_biblioteca.Service
 
         }
 
-        public bool AtualizarLivro(Livro livro)//Refatorar em controller
+        public bool AtualizarLivro(Livro livro)
         {
 
             if (string.IsNullOrWhiteSpace(livro.Nome))

@@ -7,7 +7,7 @@ namespace Crud_biblioteca.Repository
 
         public bool Inserir(Livro livro);
 
-        public Livro BuscarPorId(int id);
+        public Livro? BuscarPorId(int id);
 
         public List<Livro> ListarLivros();
 

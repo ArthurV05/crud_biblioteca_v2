@@ -1,10 +1,6 @@
 ﻿using Crud_biblioteca.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
 
-namespace Crud_biblioteca.Service
+namespace Crud_biblioteca.Services
 {
     internal interface ILivroService
     {
@@ -12,7 +8,7 @@ namespace Crud_biblioteca.Service
 
         public List<Livro> ListarLivros();
 
-        public Livro BuscarPorId(int id);
+        public Livro? BuscarPorId(int id);
 
         public bool AtualizarLivro(Livro livro);
 

@@ -1,7 +1,5 @@
-﻿using System.IO.Pipelines;
-using System.Text;
-using Crud_biblioteca.Model;
-using Crud_biblioteca.Service;
+﻿using Crud_biblioteca.Model;
+using Crud_biblioteca.Services;
 using Crud_biblioteca.UI;
 
 
@@ -9,14 +7,12 @@ namespace Crud_biblioteca.Controllers
 {
     internal class LivroController
     {
-
         private readonly LivroService _livroService;
-
-        private readonly LivroMenu _livroMenu;
         public LivroController()
         {
             _livroService = new LivroService();
         }
+
 
         public void Iniciar()
         {
@@ -36,7 +32,7 @@ namespace Crud_biblioteca.Controllers
                 switch (escolha)
                 {
                     case 1:
-                        InserirLivro();
+                        Raylane_linda();
                         break;
                     case 2:
                         ListarLivros();
@@ -63,11 +59,17 @@ namespace Crud_biblioteca.Controllers
             }
         }
 
-        public void InserirLivro() //Fazer try catch nos outros casos de conexão ao banco de dados
+        public void Raylane_linda()
         {
 
             Console.WriteLine("Digite o nome do livro:");
-            string nome = Console.ReadLine();
+            string? nome = Console.ReadLine();
+
+            if (nome is null)
+            {
+                Console.WriteLine("Entrada encerrada. Cadastro cancelado");
+                return;
+            }
 
             Console.WriteLine("Dite a quantidade de livros: ");
             int quantidade;
@@ -156,7 +158,6 @@ namespace Crud_biblioteca.Controllers
                 Console.WriteLine("Informe o ID do livro que deseja buscar: ");
             }
 
-
             try
             {
                 var livro = _livroService.BuscarPorId(id);
@@ -194,11 +195,11 @@ namespace Crud_biblioteca.Controllers
             {
                 var livro = _livroService.BuscarPorId(id);
 
-                if (livro == null)
+                if (livro is null)
                 {
                     Console.WriteLine("O id informado é invalido. Digite um id correto e tente novamente");
                     Task.Delay(2000).Wait();
-                    continuar = false;
+                    return;
                 }
                 while (continuar)
                 {
@@ -215,9 +216,14 @@ namespace Crud_biblioteca.Controllers
                     {
                         case 1:
                             {
-
                                 Console.WriteLine("Informe o novo nome");
-                                string novoNome = Console.ReadLine();
+                                string? nome = Console.ReadLine();
+
+                                if (nome is null)
+                                {
+                                    Console.WriteLine("Entrada encerrada, nome não pode estar vazio");
+                                    return;
+                                }
 
                                 Console.WriteLine("Informe a quantidade");
                                 int quantidade;
@@ -247,7 +253,7 @@ namespace Crud_biblioteca.Controllers
                                     Console.WriteLine("Informe o novo valor:");
                                 }
 
-                                Livro novoLivro = new(livro.Id, novoNome, quantidade, novoValor);
+                                Livro novoLivro = new(livro.Id, nome, quantidade, novoValor);
 
                                 var result = _livroService.AtualizarLivro(novoLivro);
 
@@ -258,7 +264,7 @@ namespace Crud_biblioteca.Controllers
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Erros no preenchimento dos campos. Informe todos os campos corretamente");
+                                    Console.WriteLine("Não foi possível atualizar o registro. Verifique os dados e a existência do registro");
                                 }
 
                                 break;
@@ -288,10 +294,9 @@ namespace Crud_biblioteca.Controllers
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Erro: O estoque não pode ser menor que zero");
+                                    Console.WriteLine("Erro: O valor informado encontra-se incorreto. Tente novamente com um número válido");
                                     break;
                                 }
-
 
                             }
 
@@ -321,7 +326,7 @@ namespace Crud_biblioteca.Controllers
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Erro: O valor não pode ser negativo");
+                                    Console.WriteLine("Erro: O valor informado encontra-se incorreto. Tente novamente com um número válido");
                                     break;
                                 }
 
@@ -384,6 +389,5 @@ namespace Crud_biblioteca.Controllers
             Environment.Exit(0);
 
         }
-
     }
 }
