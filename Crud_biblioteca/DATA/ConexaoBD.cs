@@ -8,20 +8,24 @@ namespace Crud_biblioteca.DATA
 
         public ConexaoBD()
         {
-            Conexao = new NpgsqlConnection(
-                "Host=localhost;" +
-                "Port=5432;" +
-                "Username=postgres;" +
-                "Password=postgres123;" +
-                "Database=Crud_biblioteca"
-            );
+            string? connectionString =
+                Environment.GetEnvironmentVariable("BIBLIOTECA_CONNECTION_STRING");
+
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new InvalidOperationException(
+                    "Configure a variável de ambiente BIBILIOTECA_CONNECTION_STRING"
+                );
+            }
+
+            Conexao = new NpgsqlConnection(connectionString);
             Conexao.Open();
         }
-            public void Dispose()
-            {
-                Conexao.Close();
-                Conexao.Dispose();
-                
-            }
+        public void Dispose()
+        {
+            Conexao.Close();
+            Conexao.Dispose();
+
+        }
     }
 }
