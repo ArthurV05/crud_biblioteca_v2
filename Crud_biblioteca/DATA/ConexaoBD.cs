@@ -8,15 +8,11 @@ namespace Crud_biblioteca.DATA
 
         public ConexaoBD()
         {
-            string? connectionString =
-                Environment.GetEnvironmentVariable("BIBLIOTECA_CONNECTION_STRING");
+            string? connectionString = 
+            Environment.GetEnvironmentVariable("BIBLIOTECA_CONNECTION_STRING");
 
             if (string.IsNullOrWhiteSpace(connectionString))
-            {
-                throw new InvalidOperationException(
-                    "Configure a variável de ambiente BIBILIOTECA_CONNECTION_STRING"
-                );
-            }
+                throw new InvalidOperationException("Configure a variável de ambiente BIBLIOTECA_CONNECTION_STRING");
 
             Conexao = new NpgsqlConnection(connectionString);
             Conexao.Open();
