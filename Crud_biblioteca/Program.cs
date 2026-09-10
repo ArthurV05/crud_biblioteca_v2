@@ -10,9 +10,14 @@ internal class Program
     }
     private static void Main(string[] args)
     {
-        var program = new Program();
-        program._livroController.Iniciar();
+        try
+        {
+            var program = new Program();
+            program._livroController.Iniciar();
+        } 
+        catch (InvalidOperationException ex)
+        {
+            Console.WriteLine($"Não foi possível continuar: {ex.Message}");
+        }
     }
 }
-
-
