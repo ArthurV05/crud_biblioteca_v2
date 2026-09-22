@@ -3,7 +3,7 @@ using Crud_biblioteca.DATA;
 using Dapper;
 
 
-namespace Crud_biblioteca.Repository
+namespace Crud_biblioteca.Repositories
 {
     internal class LivroRepository : ILivroRepository
     {

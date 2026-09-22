@@ -1,6 +1,6 @@
 ﻿using Crud_biblioteca.Model;
 
-namespace Crud_biblioteca.Repository
+namespace Crud_biblioteca.Repositories
 {
     internal interface ILivroRepository
     {

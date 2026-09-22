@@ -1,16 +1,11 @@
 ﻿using Crud_biblioteca.Model;
-using Crud_biblioteca.Repository;
+using Crud_biblioteca.Repositories;
 
 namespace Crud_biblioteca.Services
 {
-    internal class LivroService : ILivroService
+    internal class LivroService(ILivroRepository livroRepository) : ILivroService
     {
-        private readonly LivroRepository _livroRepository;
-        public LivroService()
-        {
-            _livroRepository = new LivroRepository();
-
-        }
+        private readonly ILivroRepository _livroRepository = livroRepository;
 
         public bool Inserir(Livro livro)
         {
@@ -47,6 +42,7 @@ namespace Crud_biblioteca.Services
 
                 return null;
             }
+
             return livro;
 
         }
@@ -73,7 +69,6 @@ namespace Crud_biblioteca.Services
 
             return result;
 
-
         }
 
         public bool AtualizarEstoque(int id, int estoque)
@@ -85,6 +80,7 @@ namespace Crud_biblioteca.Services
             }
 
             var result = _livroRepository.AtualizarEstoque(id, estoque);
+
             return result;
 
         }
@@ -97,7 +93,9 @@ namespace Crud_biblioteca.Services
 
                 return false;
             }
+
             var result = _livroRepository.AtualizarValor(id, valor);
+
             return result;
         }
 

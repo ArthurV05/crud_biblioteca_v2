@@ -5,14 +5,9 @@ using Crud_biblioteca.UI;
 
 namespace Crud_biblioteca.Controllers
 {
-    internal class LivroController
+    internal class LivroController(ILivroService livroService)
     {
-        private readonly LivroService _livroService;
-        public LivroController()
-        {
-            _livroService = new LivroService();
-        }
-
+        private readonly ILivroService _livroService = livroService;
 
         public void Iniciar()
         {
@@ -119,7 +114,6 @@ namespace Crud_biblioteca.Controllers
                 Console.WriteLine("Não foi possível concluir a operação no banco de dados.");
             }
 
-
         }
 
         public void ListarLivros()
@@ -221,7 +215,7 @@ namespace Crud_biblioteca.Controllers
 
                                 if (nome is null)
                                 {
-                                    Console.WriteLine("Entrada encerrada, nome não pode estar vazio");
+                                    Console.WriteLine("Entrada encerrada. Atualização cancelada");
                                     return;
                                 }
 
@@ -260,7 +254,7 @@ namespace Crud_biblioteca.Controllers
                                 if (result == true)
                                 {
                                     Console.WriteLine("Livro Atualizado com sucesso!");
-                                    continuar = false;
+                                    return;
                                 }
                                 else
                                 {
@@ -294,7 +288,7 @@ namespace Crud_biblioteca.Controllers
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Erro: O valor informado encontra-se incorreto. Tente novamente com um número válido");
+                                    Console.WriteLine("Verifique a existência do livro ou os valores inseridos. Nenhum registro foi alterado.");
                                     break;
                                 }
 
@@ -326,7 +320,7 @@ namespace Crud_biblioteca.Controllers
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Erro: O valor informado encontra-se incorreto. Tente novamente com um número válido");
+                                    Console.WriteLine("Registros não alterados. Processo não concluído");
                                     break;
                                 }
 
